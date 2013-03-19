@@ -4,14 +4,15 @@ public class SequenceFinder {
    
     public static void main(String[] args) {
        
-        SolutionList solutions = new SolutionList();
+        SequenceGraph graph = new SequenceGraph();
+        SolutionList solutionList = new SolutionList();
         
-        int count = 1;
-        for (Solution solution : solutions.solutions) {
-            System.out.println(count + ":" + solution);
-            count++;
+        System.out.println("Permutations: " + solutionList.solutions.size());
+        for (Solution solution : solutionList.solutions) {
+            graph.addSolution(solution.sequence);
         }
-               
+
+        graph.print();
     }
     
      

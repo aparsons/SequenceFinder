@@ -6,8 +6,8 @@ import java.util.Arrays;
 public class Submission {
     
     public final ArrayList<Integer> sequence;
-    public int chosen;
-    public int used;   
+    public int inside;
+    public int correct;   
 
     public Submission(ArrayList<Integer> sequence) {
         this.sequence = sequence;
@@ -19,7 +19,7 @@ public class Submission {
     
     @Override
     public String toString() {
-        return sequence + " (" + chosen + "," + used + ")";
+        return sequence + " (" + inside + "," + correct + ")";
     }
     
 }

@@ -31,7 +31,12 @@ public class Solution {
         }
     } 
 
-    public int getChosen(ArrayList<Integer> selection) {
+    /**
+     * Gets count of selection within solution
+     * @param selection
+     * @return 
+     */
+    public int getInsideCount(ArrayList<Integer> selection) {
         int count = 0;
         for (Integer i : selection) {
             if (sequence.contains(i)) {
@@ -41,7 +46,12 @@ public class Solution {
         return count;
     }
     
-    public int getUsed(ArrayList<Integer> selection) {
+    /**
+     * Gets count of selection in the correct position
+     * @param selection
+     * @return 
+     */
+    public int getCorrectCount(ArrayList<Integer> selection) {
         int count = 0;
         for (int i = 0; i < selection.size(); i++) {
             if (selection.get(i).equals(sequence.get(i))) {
