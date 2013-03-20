@@ -9,6 +9,21 @@ public class SequenceGraph {
     
     ArrayList<ArrayList<Integer>> solutions = new ArrayList<>();
     ArrayList<Answer> answers = new ArrayList<>();
+
+    public SequenceGraph() {
+        for (ArrayList<Integer> solution : SequenceList.getList()) {
+            addSolution(solution);
+        }
+        
+        for (Answer answer : answers) {
+            ArrayList<ArrayList<Integer>> solutions = answer.getSolutions();
+            for (Guess parent : answer.guesses) {
+                for (ArrayList<Integer> solution : solutions) {
+                    parent.addChild(new Answer(new Guess(parent, solution)));
+                }
+            }
+        }
+    }
     
     public void addSolution(ArrayList<Integer> solution) {
         if (solution == null || solutions.contains(solution)) {
@@ -37,23 +52,70 @@ public class SequenceGraph {
     void print() {
         StringBuilder sb = new StringBuilder();
         
-        for (Answer answer : answers) {
-            sb.append("(").append(answer.inside).append(",").append(answer.correct).append(") Size: ").append(answer.guesses.size()).append("\n");
+        for (Answer a0 : answers) {
+            printAnswer(a0, sb);
+            for (Guess g0 : a0.guesses) {
+                for (Answer a1 : g0.children) {
+                    sb.append("\t");
+                    printAnswer(a1, sb);
+                }
+            }
         }
         
         System.out.println(sb.toString());
     }
     
+    private void printAnswer(Answer answer, StringBuilder sb) {
+        sb.append("(").append(answer.inside).append(",").append(answer.correct).append(") Size: ").append(answer.guesses.size()).append(" ");
+        for (Guess guess : answer.guesses) {
+            sb.append(guess.solution).append(" ");
+        }
+        sb.append("\n");
+    }
+    
     class Guess {
         
+        final Guess parent;
         final ArrayList<Integer> guess, solution;
         final int inside, correct;
+        
+        ArrayList<Answer> children = new ArrayList<>();
 
         public Guess(ArrayList<Integer> guess, ArrayList<Integer> solution) {
+            this.parent = null;
             this.guess = guess;
             this.solution = solution;
             this.inside = getInsideCount();
             this.correct = getCorrectCount();
+        }
+
+        public Guess(Guess parent, ArrayList<Integer> guess) {
+            this.parent = parent;
+            this.guess = guess;
+            this.solution = parent.solution;
+            this.inside = getInsideCount();
+            this.correct = getCorrectCount();
+        }
+        
+        public void addChild(Guess guess) {
+            // TODO Retry impl with guess obj
+        }
+        
+        public void addChild(Answer answer) {
+            // TODO Check if in parents
+            
+            boolean isFound = false;
+            for (Answer child : children) {
+                if (answer.inside == child.inside && answer.correct == child.correct) {
+                    isFound = true;
+                    child.guesses.addAll(answer.guesses);
+                    break;
+                }
+            }
+
+            if (!isFound) {
+                children.add(answer);
+            }
         }
         
         private int getInsideCount() {
@@ -89,6 +151,14 @@ public class SequenceGraph {
             guesses.add(guess);
             this.inside = guess.inside;
             this.correct = guess.correct;
+        }
+        
+        public ArrayList<ArrayList<Integer>> getSolutions() {
+            ArrayList<ArrayList<Integer>> solutions = new ArrayList<>();
+            for (Guess guess : guesses) {
+                solutions.add(guess.solution);
+            }
+            return solutions;
         }
   
     }

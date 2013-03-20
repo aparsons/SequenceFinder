@@ -3,6 +3,7 @@ package net.aparsons.praetorian.sequence;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@Deprecated
 public class Submission {
     
     public final ArrayList<Integer> sequence;

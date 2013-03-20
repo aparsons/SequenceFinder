@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
+@Deprecated
 public class Solution {
 
     public static final ArrayList<Integer> OPTIONS = new ArrayList<>(Arrays.asList(new Integer[]{ 0, 1, 2, 3, 4, 5 })); 
