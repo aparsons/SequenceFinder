@@ -1,4 +1,4 @@
-package net.aparsons.praetorian.sequence;
+package net.aparsons.praetorian.sequence.core;
 
 import java.util.ArrayList;
 import java.util.Arrays;
